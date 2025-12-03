@@ -75,6 +75,8 @@
             line-height: 1.9;
             color: #555;
             margin-bottom: 2rem;
+            white-space: pre-wrap; /* preserve user line breaks and spacing */
+            overflow-wrap: break-word;
         }
         
         .button-group {
@@ -147,7 +149,7 @@
                 <span><strong>Author:</strong> {{ post.author }}</span>
                 <span><strong>Published:</strong> {{ post.created_at|date:"F d, Y" }}</span>
             </div>
-            <div class="post-body">{{ post.content }}</div>
+            <div class="post-body">{{ post.content|escape }}</div>
             <div class="button-group">
                 <a href="/" class="btn btn-home">← Back to Blog</a>
                 <a href="/update/{{ post.id }}" class="btn btn-edit">✎ Edit Post</a>
