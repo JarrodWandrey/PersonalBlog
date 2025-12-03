@@ -1,0 +1,49 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from .services import get_all_posts, create_post, update_post as update_post_service, delete_post as delete_post_service
+
+# Base view to show all posts
+def home(request):
+    allPosts = get_all_posts()
+    return render(request, 'home.html', {'posts': allPosts})
+
+# View to add a new post
+def add_post(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+        content = request.POST.get('content')
+        create_post(title, author, content)
+        return home(request)
+    return render(request, 'add_post.html')
+
+# View to show a single post
+def show_post(request, post_id):
+    post = get_all_posts().filter(id=post_id).first()
+    if post:
+        return render(request, 'show_post.html', {'post': post})
+    else:
+        return HttpResponse("Post not found", status=404)
+
+# View to update an existing post
+def update_post(request, post_id):
+    post = get_all_posts().filter(id=post_id).first()
+    if not post:
+        return HttpResponse("Post not found", status=404)
+    
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+        content = request.POST.get('content')
+        update_post_service(post_id, title, author, content)
+        return show_post(request, post_id)
+    
+    return render(request, 'update_post.html', {'post': post})
+
+# View to delete a post
+def delete_post(request, post_id):
+    success = delete_post_service(post_id)
+    if success:
+        return home(request)
+    else:
+        return HttpResponse("Post not found", status=404)

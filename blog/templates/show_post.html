@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Post</title>
+</head>
+<body>
+    {% csrf_token %}
+    <label for="title">{{ post.title }}</label><br>
+    <label for="author">{{ post.author }}</label><br>
+    <label for="content">{{ post.content }}</label><br>
+    <button><a href="/">Home</a></button>
+    <button><a href="/update/{{ post.id }}">Edit</a></button>
+    <button><a href="/delete/{{ post.id }}">Delete</a></button>
+</body>
+</html>
