@@ -149,6 +149,7 @@
                 <span><strong>Author:</strong> {{ post.author }}</span>
                 <span><strong>Published:</strong> {{ post.created_at|date:"F d, Y" }}</span>
             </div>
+            <!-- |escape here allows for the content of the post to display with formatting used when it was created -->
             <div class="post-body">{{ post.content|escape }}</div>
             <div class="button-group">
                 <a href="/" class="btn btn-home">← Back to Blog</a>

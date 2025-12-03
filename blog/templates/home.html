@@ -144,6 +144,7 @@
                 <article class="post-card">
                     <h2>{{ post.title }}</h2>
                     <div class="post-meta">by {{ post.author }} on {{ post.created_at|date:"M d, Y" }}</div>
+                    <!-- |truncatewords is built in and allows for you to have an eplises after a certain cutoff, there is also truncatechars -->
                     <div class="post-content">{{ post.content|truncatewords:20 }}</div>
                     <a href="/show/{{post.id}}">Read More →</a>
                 </article>
