@@ -128,6 +128,18 @@
             <div class="header-content">
                 <h1>DevTales</h1>
                 <a href="/create/" class="add-post-btn">+ New Post</a>
+                {% if user.is_authenticated %}
+                    <li class="nav__item"></li>
+                        <a href="{% url 'logout' %}" class="add-post-btn">Logout</a>
+                    </li>  
+                {% else %}
+                    <li class="nav__item"></li>
+                        <a href="{% url 'login' %}" class="add-post-btn">Login</a>
+                    </li>
+                    <li class="nav__item"></li>
+                        <a href="{% url 'register' %}" class="add-post-btn">Register</a>
+                    </li>
+                {% endif %}
             </div>
         </div>
     </header>
