@@ -1,0 +1,24 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django database (optional if you want to keep it)
+db.sqlite3
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Logs
+*.log
+
+# System files
+.DS_Store
+
+# VSCode
+.vscode/
+
+# Python egg files
+*.egg-info/
