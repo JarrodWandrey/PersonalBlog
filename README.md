@@ -9,7 +9,7 @@ For Startup:
 ------------
 1. Clone changes
 2. In terminal
-   a. run `source venv/bin/activate` to start up the env
-   b. run `pip3 install django` to install the nessecary package
-   c. Will likely need to run `python3 manage.py migrate` then `python3 manage.py makemigrations` to get the models
-4. `python3 manage.py runserver` will start the project for testing
+   - run `source venv/bin/activate` to start up the env
+   - run `pip3 install django` to install the nessecary package
+   -  Will likely need to run `python3 manage.py migrate` then `python3 manage.py makemigrations` to get the models
+3. `python3 manage.py runserver` will start the project for testing
