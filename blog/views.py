@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .services import get_all_posts, create_post, update_post as update_post_service, delete_post as delete_post_service
+from .services import get_all_posts, create_post, get_post_by_id, update_post as update_post_service, delete_post as delete_post_service
 
 # Base view to show all posts
 def home(request):
-    allPosts = get_all_posts()
-    return render(request, 'home.html', {'posts': allPosts})
+    page_number = request.GET.get('page', 1)
+    post_page = get_all_posts(page_number=page_number)
+
+    return render(request, 'home.html', {'posts': post_page})
 
 # View to add a new post
 def add_post(request):
@@ -19,7 +21,7 @@ def add_post(request):
 
 # View to show a single post
 def show_post(request, post_id):
-    post = get_all_posts().filter(id=post_id).first()
+    post = get_post_by_id(post_id)
     if post:
         return render(request, 'show_post.html', {'post': post})
     else:
@@ -27,7 +29,7 @@ def show_post(request, post_id):
 
 # View to update an existing post
 def update_post(request, post_id):
-    post = get_all_posts().filter(id=post_id).first()
+    post = get_post_by_id(post_id)
     if not post:
         return HttpResponse("Post not found", status=404)
     

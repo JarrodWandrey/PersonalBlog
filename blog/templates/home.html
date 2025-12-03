@@ -134,7 +134,7 @@
     
     <div class="container">
         <div class="posts-section">
-            {% if not posts %}
+            {% if posts.object_list|length == 0 %}
                 <div class="no-posts">
                     <p>No posts available yet. Be the first to share!</p>
                     <a href="/create/" class="add-post-btn">Create Your First Post</a>
@@ -147,6 +147,17 @@
                     <div class="post-content">{{ post.content }}</div>
                 </article>
             {% endfor %}
+            <div class="pagination">
+                {% if post.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                <span> Page {{ posts.number }} of {{ posts.paginator.num_pages }} </span>
+
+                {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}">Next</a>
+                {% endif %}    
+            </div>
         </div>
     </div>
 </body>
