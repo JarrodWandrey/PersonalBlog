@@ -127,7 +127,10 @@
         <div class="container">
             <div class="header-content">
                 <h1>DevTales</h1>
+                {% if user.is_superuser %}
                 <a href="/create/" class="add-post-btn">+ New Post</a>
+                {% endif %}
+                
                 {% if user.is_authenticated %}
                     <li class="nav__item"></li>
                         <a href="{% url 'logout' %}" class="add-post-btn">Logout</a>
