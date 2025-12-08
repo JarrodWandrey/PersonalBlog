@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .services import get_all_posts, create_post, get_post_by_id, update_post as update_post_service, delete_post as delete_post_service, create_comment
+from .forms import CommentForm
 
 # Base view to show all posts
 def home(request):
@@ -21,9 +22,17 @@ def add_post(request):
 
 # View to show a single post
 def show_post(request, post_id):
+    form = CommentForm()
     post = get_post_by_id(post_id)
     if post:
-        return render(request, 'show_post.html', {'post': post})
+        if request.method == 'POST':
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                author = form.cleaned_data['author']
+                content = form.cleaned_data['content']
+                create_comment(post_id, author, content)
+                return redirect('show_post', post_id=post_id)
+        return render(request, 'show_post.html', {'post': post, 'form': form})
     else:
         return HttpResponse("Post not found", status=404)
 
@@ -49,18 +58,3 @@ def delete_post(request, post_id):
         return home(request)
     else:
         return HttpResponse("Post not found", status=404)
-    
-# View to add a comment to a post
-# Will need to add html form for adding comments in show_post.html
-def add_comment(request, post_id):
-    post = get_post_by_id(post_id)
-    if not post:
-        return HttpResponse("Post not found", status=404)
-    
-    if request.method == 'POST':
-        author = request.POST.get('author')
-        content = request.POST.get('content')
-        create_comment(post_id, author, content)
-        return show_post(request, post_id)
-    
-    return show_post(request, post_id) 

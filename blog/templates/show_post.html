@@ -132,6 +132,60 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
         }
+        /* Comments / form styling */
+        .comments-section {
+            margin-top: 1.5rem;
+        }
+
+        .comments-list {
+            list-style: none;
+            margin-top: 1rem;
+            padding-left: 0;
+        }
+
+        .comment {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 0.75rem;
+            color: #444;
+        }
+
+        .comment p { margin: 0; }
+
+        .comment .meta { color: #7f8c8d; font-size: 0.9rem; margin-bottom: 0.5rem; }
+
+        .comment-form {
+            margin-top: 1.5rem;
+            background: #fff;
+            padding: 1.25rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .comment-form h3 { margin-top: 0; margin-bottom: 0.75rem; color: #2c3e50; }
+
+        .comment-form label { display:block; margin-bottom:0.25rem; font-weight:600; color:#2c3e50; }
+
+        .comment-form input[type="text"],
+        .comment-form textarea,
+        .comment-form input,
+        .comment-form select {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #e6e6e6;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+            color: #333;
+            background: #fbfbfb;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+        }
+
+        .comment-form textarea { min-height: 110px; resize: vertical; }
+
+        .comment-form .btn { margin-top: 0.5rem; }
     </style>
 </head>
 <body>
@@ -158,6 +212,46 @@
                 <a href="/delete/{{ post.id }}" class="btn btn-delete">✕ Delete</a>
                 {% endif %}
             </div>
+            <div class="comments-section" style="margin-top:1.5rem;">
+                <h2>{{ post.comments.count }} Comment{{ post.comments.count|pluralize }}</h2>
+                <div class="comment-form">
+                    <h3>Leave a comment</h3>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        {% if user.is_authenticated %}
+                        <input type="hidden" name="author" value="{{ user.username }}">
+                        <p style="margin-bottom:0.5rem; color:#7f8c8d;">Commenting as <strong>{{ user.username }}</strong></p>
+                        {% else %}
+                        <div style="margin-bottom:0.75rem;">
+                            {{ form.author.label_tag }}
+                            {{ form.author }}
+                            {{ form.author.errors }}
+                        </div>
+                        {% endif %}
+
+                        <div style="margin-bottom:0.75rem;">
+                            {{ form.content.label_tag }}
+                            {{ form.content }}
+                            {{ form.content.errors }}
+                        </div>
+
+                        <button type="submit" class="btn btn-home">Submit Comment</button>
+                    </form>
+                </div>
+                <ul class="comments-list">
+                    {% for comment in post.comments.all %}
+                    <li class="comment">
+                        <p class="meta"><strong>{{ comment.author }}</strong> — <small>{{ comment.created_at|date:"F d, Y H:i" }}</small></p>
+                        <p class="body">{{ comment.content|linebreaksbr }}</p>
+                    </li>
+                    {% empty %}
+                    <li class="no-comments" style="color:#7f8c8d;">No comments yet. Be the first to comment!</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
         </div>
     </div>
 </body>
