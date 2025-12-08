@@ -51,6 +51,7 @@ def delete_post(request, post_id):
         return HttpResponse("Post not found", status=404)
     
 # View to add a comment to a post
+# Will need to add html form for adding comments in show_post.html
 def add_comment(request, post_id):
     post = get_post_by_id(post_id)
     if not post:
@@ -62,4 +63,4 @@ def add_comment(request, post_id):
         create_comment(post_id, author, content)
         return show_post(request, post_id)
     
-    return show_post(request, post_id)
+    return show_post(request, post_id) 
