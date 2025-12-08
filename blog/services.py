@@ -49,3 +49,12 @@ def delete_post(post_id):
         return True
     except Post.DoesNotExist:
         return False
+    
+# Create comment on a post
+def create_comment(post_id, author, content):
+    try:
+        post = Post.objects.get(id=post_id)
+        comment = post.comments.create(author=author, content=content)
+        return comment
+    except Post.DoesNotExist:
+        return None
