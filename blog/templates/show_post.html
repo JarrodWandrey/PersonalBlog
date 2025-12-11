@@ -186,6 +186,25 @@
         .comment-form textarea { min-height: 110px; resize: vertical; }
 
         .comment-form .btn { margin-top: 0.5rem; }
+        
+        .like-btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .like-btn:hover {
+            background-color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
     </style>
 </head>
 <body>
@@ -206,7 +225,7 @@
             <!-- |escape here allows for the content of the post to display with formatting used when it was created -->
             <div class="post-body">{{ post.content|escape }}</div>
             <div class="button-group">
-                <a href="/like/{{post.id}}">👍</a>
+                <a href="/like/{{post.id}}" class="like-btn">👍 Like</a>
                 <a href="/" class="btn btn-home">← Back to Blog</a>
                 {% if user.is_superuser %}
                 <a href="/update/{{ post.id }}" class="btn btn-edit">✎ Edit Post</a>
