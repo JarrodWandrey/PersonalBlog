@@ -162,6 +162,10 @@
                     <!-- |truncatewords is built in and allows for you to have an eplises after a certain cutoff, there is also truncatechars -->
                     <div class="post-content">{{ post.content|truncatewords:20 }}</div>
                     <a href="/show/{{post.id}}">Read More →</a>
+                    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
+                        <div class="post-meta" style="margin-right: 1rem;">💬 {{ post.comments.count }}</div> <br>
+                        <div class="post-meta">👍 {{ post.likes }}</div>
+                    </div>
                 </article>
             {% endfor %}
             <div class="pagination">

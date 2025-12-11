@@ -58,3 +58,13 @@ def delete_post(request, post_id):
         return home(request)
     else:
         return HttpResponse("Post not found", status=404)
+    
+# View to add a like to a post
+def like_post(request, post_id):
+    post = get_post_by_id(post_id)
+    if post:
+        post.likes += 1
+        post.save()
+        return home(request)
+    else:
+        return HttpResponse("Post not found", status=404)
