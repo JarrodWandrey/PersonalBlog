@@ -8,7 +8,7 @@ def get_all_posts(page_number=1, per_page=10):
     objects = Post.objects.all().order_by('-created_at')
 
     paginator = Paginator(objects, per_page)
-    page_obj = paginator.get_page(page_number)
+    page_obj = paginator.get_page(page_number) 
 
     return page_obj
 
