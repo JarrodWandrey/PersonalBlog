@@ -1,4 +1,4 @@
-from .models import Post
+from .models import Post, Comment, UserLike
 from django.core.paginator import Paginator
 
 # Service functions for blog operations
@@ -56,5 +56,24 @@ def create_comment(post_id, author, content):
         post = Post.objects.get(id=post_id)
         comment = post.comments.create(author=author, content=content)
         return comment
+    except Post.DoesNotExist:
+        return None
+    
+# Like a post
+def like_unlike_post(post_id, user_name):
+    try:
+        post = Post.objects.get(id=post_id)
+        # Check if user has already liked the post (which means we need to unlike it)
+        existing_like = UserLike.objects.filter(post=post, user_name=user_name).first()
+        if existing_like:
+            existing_like.delete()
+            post.likes = max(0, post.likes - 1)
+            post.save()
+            return 'unliked'
+        else:
+            UserLike.objects.create(post=post, user_name=user_name)
+            post.likes += 1
+            post.save()
+            return 'liked'
     except Post.DoesNotExist:
         return None

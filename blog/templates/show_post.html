@@ -233,7 +233,7 @@
                 {% endif %}
             </div>
             <div class="comments-section" style="margin-top:1.5rem;">
-                <h2>{{ post.comments.count }} Comment{{ post.comments.count|pluralize }}</h2>
+                <h2> {{ post.likes }} Like{{ post.likes|pluralize }} - {{ post.comments.count }} Comment{{ post.comments.count|pluralize }}</h2>
                 <div class="comment-form">
                     <h3>Leave a comment</h3>
                     <form method="post" action="">

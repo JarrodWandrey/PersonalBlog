@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from .services import get_all_posts, create_post, get_post_by_id, update_post as update_post_service, delete_post as delete_post_service, create_comment
+from .services import get_all_posts, create_post, get_post_by_id, update_post as update_post_service, delete_post as delete_post_service, create_comment, like_unlike_post
 from .forms import CommentForm
 
 # Base view to show all posts
@@ -60,11 +61,11 @@ def delete_post(request, post_id):
         return HttpResponse("Post not found", status=404)
     
 # View to add a like to a post
+@login_required
 def like_post(request, post_id):
     post = get_post_by_id(post_id)
     if post:
-        post.likes += 1
-        post.save()
-        return home(request)
+        like_unlike_post(post_id=post_id, user_name=request.user.username)
+        return show_post(request, post_id)
     else:
         return HttpResponse("Post not found", status=404)
