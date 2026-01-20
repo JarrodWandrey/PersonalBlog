@@ -13,3 +13,8 @@ class Comment(models.Model):
     author = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+class UserLike(models.Model):
+    post = models.ForeignKey(Post, related_name='user_likes', on_delete=models.CASCADE)
+    user_name = models.CharField(max_length=50)
+    liked_at = models.DateTimeField(auto_now_add=True)
