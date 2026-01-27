@@ -37,8 +37,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            flex-wrap: nowrap;
+            gap: 2rem;
         }
         
         h1 {
@@ -46,19 +46,32 @@
             font-weight: 700;
             letter-spacing: -1px;
             color: #60a5fa;
+            flex-shrink: 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-left: auto;
         }
         
         .add-post-btn {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
             color: white;
-            padding: 0.8rem 1.5rem;
+            padding: 0.75rem 1.25rem;
             border: none;
             border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             cursor: pointer;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
         }
         
         .add-post-btn:hover {
@@ -67,57 +80,155 @@
             box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
         
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+        }
+        
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
+        }
+        
         .posts-section {
             padding: 3rem 0;
+        }
+        
+        .posts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .posts-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .posts-grid {
+                grid-template-columns: 1fr;
+            }
         }
         
         .post-card {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
             border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
             border: 1px solid #334155;
-            transition: all 0.3s ease;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             border-left: 4px solid #3b82f6;
             box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .post-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.5s ease;
+            pointer-events: none;
         }
         
         .post-card:hover {
-            box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
-            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(59, 130, 246, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-6px) scale(1.02);
             border-left: 4px solid #60a5fa;
+            border-color: #475569;
+        }
+        
+        .post-card:hover::before {
+            left: 100%;
         }
         
         .post-card h2 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             margin-bottom: 0.5rem;
             color: #93c5fd;
-            font-weight: 600;
+            font-weight: 700;
+            line-height: 1.3;
+            transition: color 0.3s ease;
+        }
+        
+        .post-card:hover h2 {
+            color: #bfdbfe;
         }
         
         .post-card a {
             color: #60a5fa;
             text-decoration: none;
             transition: all 0.3s ease;
-            font-weight: 500;
+            font-weight: 600;
+            display: inline-block;
+            position: relative;
+            width: fit-content;
+            margin-top: auto;
+        }
+        
+        .post-card a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #60a5fa;
+            transition: width 0.3s ease;
         }
         
         .post-card a:hover {
             color: #93c5fd;
-            text-decoration: underline;
+        }
+        
+        .post-card a:hover::after {
+            width: 100%;
         }
         
         .post-meta {
             color: #94a3b8;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin-bottom: 1rem;
             font-style: italic;
         }
         
         .post-content {
             color: #cbd5e1;
-            line-height: 1.8;
+            line-height: 1.6;
             margin-bottom: 1rem;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(51, 65, 85, 0.5);
+        }
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            transition: color 0.3s ease;
+        }
+        
+        .post-card:hover .stat-item {
+            color: #e0e7ff;
         }
         
         .no-posts {
@@ -165,22 +276,18 @@
         <div class="container">
             <div class="header-content">
                 <h1>DevTales</h1>
-                {% if user.is_superuser %}
-                <a href="/create/" class="add-post-btn">+ New Post</a>
-                {% endif %}
-                
-                {% if user.is_authenticated %}
-                    <li class="nav__item"></li>
-                        <a href="{% url 'logout' %}" class="add-post-btn">Logout</a>
-                    </li>  
-                {% else %}
-                    <li class="nav__item"></li>
-                        <a href="{% url 'login' %}" class="add-post-btn">Login</a>
-                    </li>
-                    <li class="nav__item"></li>
-                        <a href="{% url 'register' %}" class="add-post-btn">Register</a>
-                    </li>
-                {% endif %}
+                <div class="nav-buttons">
+                    {% if user.is_superuser %}
+                    <a href="/create/" class="add-post-btn btn-primary">+ New Post</a>
+                    {% endif %}
+                    
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}" class="add-post-btn btn-secondary">Logout</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="add-post-btn btn-primary">Login</a>
+                        <a href="{% url 'register' %}" class="add-post-btn btn-secondary">Register</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </header>
@@ -193,19 +300,26 @@
                     <a href="/create/" class="add-post-btn">Create Your First Post</a>
                 </div>
             {% endif %}
-            {% for post in posts %}
-                <article class="post-card">
-                    <h2>{{ post.title }}</h2>
-                    <div class="post-meta">by {{ post.author }} on {{ post.created_at|date:"M d, Y" }}</div>
-                    <!-- |truncatewords is built in and allows for you to have an eplises after a certain cutoff, there is also truncatechars -->
-                    <div class="post-content">{{ post.content|truncatewords:20 }}</div>
-                    <a href="/show/{{post.id}}">Read More →</a>
-                    <div style="display: flex; justify-content: flex-end; align-items: center; margin-top: 1rem;">
-                        <div class="post-meta" style="margin-right: 1rem;">💬 {{ post.comments.count }}</div> <br>
-                        <div class="post-meta">👍 {{ post.likes }}</div>
-                    </div>
-                </article>
-            {% endfor %}
+            <div class="posts-grid">
+                {% for post in posts %}
+                    <article class="post-card">
+                        <h2>{{ post.title }}</h2>
+                        <div class="post-meta">by {{ post.author }} on {{ post.created_at|date:"M d, Y" }}</div>
+                        <div class="post-content">{{ post.content|truncatewords:15 }}</div>
+                        <a href="/show/{{post.id}}">Read More →</a>
+                        <div class="post-stats">
+                            <div class="stat-item">
+                                <span>💬</span>
+                                <span>{{ post.comments.count }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span>👍</span>
+                                <span>{{ post.likes }}</span>
+                            </div>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
             <div class="pagination">
                 {% if post.has_previous %}
                     <a href="?page={{ posts.previous_page_number }}">Previous</a>
