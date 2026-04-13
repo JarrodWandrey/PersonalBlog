@@ -23,3 +23,4 @@ ENV/
 # Python egg files
 *.egg-info/
 .env
+.json
