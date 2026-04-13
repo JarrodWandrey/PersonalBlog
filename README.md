@@ -12,5 +12,5 @@ For Startup:
    - create venv `python -m venv .venv`
    - run `source venv/bin/activate` to start up the env
    - run `pip3 install -r requirements.txt` to install the necessary packages
-   -  Will likely need to run `python3 manage.py migrate` then `python3 manage.py makemigrations` to get the models
+   -  Will likely need to run `python3 manage.py migrate` then `python3 manage.py makemigrations` to get the models ( this might not be needed anymore as DB is now remote)
 4. `python3 manage.py runserver` will start the project for testing
